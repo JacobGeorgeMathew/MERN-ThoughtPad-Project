@@ -3,7 +3,7 @@ import { getAllNotes,createNotes,updateNotes,deleteNotes, getNoteById } from "..
 
 const router = express.Router();
 
-//This is an endpoint
+//These are endpoints
 router.get("/", getAllNotes);
 router.get("/:id", getNoteById);
 
