@@ -20,9 +20,12 @@ if (process.env.NODE_ENV !== "production") {
 /*This middleware is added to avoid CORS(Cross Platform Resource Sharing) error , which is a browser security rule that avoids certain origins to access this API. */
 app.use(ratelimiter);
 
+//This route was added after the website has being deployed in render
+app.get("/api/uptimerobot", (_, res) => {
+  return res.status(200).json({message:"success"});
+});
+
 app.use("/api/notes",notesRoutes);
-
-
 
 if(process.env.NODE_ENV === "production"){
   app.use(express.static(path.join(__dirname,"../frontend/dist")));
