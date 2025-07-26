@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 // create schema
 // then create a model using that schema
 
@@ -12,6 +12,10 @@ const noteSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    }
   }, {
     timestamps: true,
   }

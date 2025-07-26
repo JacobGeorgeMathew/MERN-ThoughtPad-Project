@@ -1,8 +1,8 @@
 import Note from "../model/Note.js";
 
-export async function getAllNotes(_,res) {
+export async function getAllNotes(req,res) {
  try {
-  const note = await Note.find().sort({createdAt:-1}); //-1 will sort in descending order
+  const note = await Note.find({createdBy: req.user._id}).sort({createdAt:-1}); //-1 will sort in descending order
   res.status(200).json(note);
  } catch (error) {
   console.error("Error in getAll notes ",error);
@@ -13,13 +13,14 @@ export async function getAllNotes(_,res) {
 export async function createNotes(req,res){
   try {
     const {title,content} = req.body;
-    const note = new Note({title,content});
+    //console.log("User Id",req.user);
+    const note = new Note({title,content,createdBy: req.user._id});
 
     const savedNote = await note.save();
     res.status(201).json(savedNote);
   } catch (error) {
     console.error("Error in  createNotes ",error);
-  res.status(500).json({message:"Internal server error"});
+  res.status(500).json({message:"Internal server error",user: req.user});
   }
 };
 
